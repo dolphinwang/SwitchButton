@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SwitchButton">
+        <!-- Drawable of cursor, press status supported-->
+        <attr name="cursor" format="reference" />
+        <attr name="selectedBG" format="color" />
+        <attr name="unselectedBG" format="color" />
+        <attr name="moveDuration" format="integer" />
+        <attr name="trackWidth" format="dimension" />
+        <attr name="trackPadding" format="dimension" />
+        <attr name="cursorTouchExpand" format="dimension" />
+        <attr name="status" format="enum">
+            <enum name="ON" value="0x00" />
+            <enum name="OFF" value="0x01" />
+        </attr>
+
+        <!-- about shadow-->
+        <attr name="shadowExpand" format="dimension" />
+        <attr name="shadowXDiff" format="dimension" />
+        <attr name="shadowYDiff" format="dimension" />
+        <!-- Drawable of cursor's shadow , Gradientdrawable recommend-->
+        <attr name="shadow" format="reference" />
+    </declare-styleable>
+</resources>

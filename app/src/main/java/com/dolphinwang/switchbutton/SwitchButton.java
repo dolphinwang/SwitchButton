@@ -531,7 +531,10 @@ public class SwitchButton extends View {
             }
         }
         
-        changeStatus();
+        mStatus = status;
+        if (mListener != null) {
+            mListener.onChange(status);
+        }
 
         invalidate();
     }

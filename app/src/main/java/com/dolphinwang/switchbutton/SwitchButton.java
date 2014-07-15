@@ -75,7 +75,8 @@ public class SwitchButton extends View {
     private static final int DEFAULT_SELECTED_BG_COLOR = Color.rgb(252, 87, 119);
     private static final int DEFAULT_UNSELECTED_BG_COLOR = Color.rgb(238, 238, 238);
     private static final int DEFAULT_TOUCH_EXPAND = 20;
-    private static final int TOUCH_SLOP = 2;
+    
+    private static int TOUCH_SLOP;
 
     /**
      * Represent location of switch cursor
@@ -124,6 +125,7 @@ public class SwitchButton extends View {
     private int mLastX;
     private boolean mPressed;
     private boolean mClicked;
+    private boolean mIsBeingDragged;
 
     private OnStatusChangeListener mListener;
 
@@ -154,6 +156,8 @@ public class SwitchButton extends View {
         mScroller = new Scroller(context, new DecelerateInterpolator());
 
         mPaintFlagsDrawFilter = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+        
+        TOUCH_SLOP = ViewConfiguration.get(context).getScaledTouchSlop();
 
         setWillNotDraw(false);
         setFocusable(true);
@@ -322,6 +326,7 @@ public class SwitchButton extends View {
                 mLastX = 0;
                 mPressed = false;
                 mClicked = false;
+                mIsBeingDragged = false;
                 break;
         }
 
@@ -360,10 +365,15 @@ public class SwitchButton extends View {
 
         final int deltaX = x - mLastX;
         mLastX = x;
-        if (Math.abs(deltaX) <= TOUCH_SLOP) {
-            return;
+        
+        if (!mIsBeingDragged) {
+            if (Math.abs(deltaX) > TOUCH_SLOP) {
+                mIsBeingDragged = true;
+                mClicked = false;
+            } else {
+                return;
+            }
         }
-        mClicked = false;
 
         if (mCursorLocation + deltaX <= mCursorLeftBoundary) {
             mCursorLocation = mCursorLeftBoundary;

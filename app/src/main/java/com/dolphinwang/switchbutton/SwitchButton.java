@@ -522,11 +522,15 @@ public class SwitchButton extends View {
             return;
         }
 
-        if (status == STATUS.ON) {
-            mScroller.startScroll((int) mCursorLocation, 0, (int) (mCursorRightBoundary - mCursorLocation), mCursorMoveDuration);
-        } else {
-            mScroller.startScroll((int) mCursorLocation, 0, (int) (mCursorLeftBoundary - mCursorLocation), mCursorMoveDuration);
+
+        if (mCursorRightBoundary > 0) {
+            if (status == STATUS.ON) {
+                mScroller.startScroll((int) mCursorLocation, 0, (int) (mCursorRightBoundary - mCursorLocation), mCursorMoveDuration);
+            } else {
+                mScroller.startScroll((int) mCursorLocation, 0, (int) (mCursorLeftBoundary - mCursorLocation), mCursorMoveDuration);
+            }
         }
+        
         changeStatus();
 
         invalidate();
